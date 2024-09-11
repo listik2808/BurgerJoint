@@ -12,7 +12,7 @@ namespace Scripts.CustomPool
         [Min(0)] private int _poolCountMax;
         private List<GameObject> _pools = new List<GameObject>();
 
-        public Pool( GameObject prefab , int count,Transform container)
+        public void Construct( GameObject prefab , int count,Transform container)
         {
             _prefab = prefab;
             _poolCountMax = count;

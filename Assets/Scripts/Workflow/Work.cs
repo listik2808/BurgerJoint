@@ -26,7 +26,7 @@ namespace Scripts.Workflow
 
         public void RunWork(float elepsedTime)
         {
-            if(_min == _timeWorkMax)
+            if(_min >= _timeWorkMax)
             {
                 BurgerReady?.Invoke();
             }
