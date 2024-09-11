@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Scripts.CustomPool;
+using UnityEngine;
 
 namespace Scripts.Infrastructure
 {
@@ -9,7 +10,6 @@ namespace Scripts.Infrastructure
         private void Awake()
         {
             _game = new Game();
-
             DontDestroyOnLoad(this);
         }
     }

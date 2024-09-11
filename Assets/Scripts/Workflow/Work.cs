@@ -32,7 +32,7 @@ namespace Scripts.Workflow
             }
             else 
             {
-                _min += Time.deltaTime;
+                _min += elepsedTime;
                 _icon.fillAmount = _min / _timeWorkMax;
             }
             
