@@ -12,7 +12,7 @@ namespace Scripts.TreggerZone
         [SerializeField] private float _timeWorkSec;
         [SerializeField] private float _timeSecMax;
         [SerializeField] private Transform _transformPoint;
-        private GameObject _createdObject;
+        private GameObject _burger;
         private float _elepsedTime;
 
         private void OnEnable()
@@ -35,17 +35,17 @@ namespace Scripts.TreggerZone
 
         private void OnTriggerStay(Collider other)
         {
-            if(other.TryGetComponent(out HeroMove hero))
+            if(other.TryGetComponent(out HeroAnimation hero))
             {
                 _elepsedTime += Time.deltaTime;
-                if (_elepsedTime >= _timeSecMax && _createdObject == null)
+                if (_elepsedTime >= _timeSecMax && _burger == null)
                 {
                     _work.RunWork(_timeWorkSec);
                     _elepsedTime = 0;
                 }
-                else if(_createdObject != null)
+                else if(_burger != null && hero.Target == null)
                 {
-
+                    hero.Take(_burger);
                 }
             }
         }
@@ -61,8 +61,8 @@ namespace Scripts.TreggerZone
 
         private void ActivateBurger()
         {
-            _createdObject = _pool.Get();
-            _createdObject.transform.position = _transformPoint.position; 
+            _burger = _pool.Get();
+            _burger.transform.position = _transformPoint.position; 
         }
     }
 }
