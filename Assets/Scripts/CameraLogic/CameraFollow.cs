@@ -14,7 +14,7 @@ namespace Scripts.CameraLogic
         {
             if (_following == null)
                 return;
-            Quaternion rotation = Quaternion.Euler(_rotationAngleX, 0, 0);
+            Quaternion rotation = Quaternion.Euler(_rotationAngleX, 180, 0);
             Vector3 position = rotation * new Vector3(0, 0, -_distance) + FollowingPointPosition();
 
             transform.rotation = rotation;

@@ -27,9 +27,10 @@ namespace Scripts.TreggerZone
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.TryGetComponent(out HeroMove heroMove))
+            if(other.TryGetComponent(out HeroAnimation heroAnimation))
             {
-                _work.ActivateBackgrounImage();
+                if(heroAnimation.Target == null)
+                    _work.ActivateBackgrounImage();
             }
         }
 
