@@ -12,17 +12,17 @@ namespace Scripts.TreggerZone
         [SerializeField] private float _timeWorkSec;
         [SerializeField] private float _timeSecMax;
         [SerializeField] private Transform _transformPoint;
-        private GameObject _burger;
+        private Burger _burger;
         private float _elepsedTime;
 
         private void OnEnable()
         {
-            _work.BurgerReady += ActivateBurger;
+            _work.Ready += ActivateBurger;
         }
 
         private void OnDisable()
         {
-            _work.BurgerReady -= ActivateBurger;
+            _work.Ready -= ActivateBurger;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -53,16 +53,23 @@ namespace Scripts.TreggerZone
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent(out HeroMove hero))
+            if (other.TryGetComponent(out HeroAnimation hero))
             {
                 _work.ResettingWorkProgress();
                 _work.DeactivateBackgrounImage();
+                if(hero.Target != null)
+                    _burger = null;
             }
         }
 
         private void ActivateBurger()
         {
-            _burger = _pool.Get();
+            GameObject obj = _pool.Get();
+            if(obj.TryGetComponent(out Burger burger))
+            {
+                _burger = burger;
+                burger.TrySetPosition(_pool.Container);
+            }
             _burger.transform.position = _transformPoint.position; 
         }
     }

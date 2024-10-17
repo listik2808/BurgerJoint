@@ -15,7 +15,7 @@ namespace Scripts.Infrastructure
         private static void RegisterInputService()
         {
             if (Application.isEditor)
-                InputService = new StandaloneInputService();
+                InputService = new MobileInputService();//StandaloneInputService();
             else
                 InputService = new MobileInputService();
         }

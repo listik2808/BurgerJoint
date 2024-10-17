@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Scripts.CustomPool;
+using System;
 using UnityEngine;
 
 namespace Scripts.Hero
@@ -11,10 +12,10 @@ namespace Scripts.Hero
         [SerializeField] private Animator _animator;
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private Transform _pointGrab;
+        private Transform _pointStartBurger;
+        private Burger _target;
 
-        private GameObject _target;
-
-        public GameObject Target => _target;
+        public Burger Target => _target;
 
         private void Update()
         {
@@ -24,7 +25,7 @@ namespace Scripts.Hero
                 _animator.SetBool(IsMove, false);
         }
 
-        public void Take(GameObject burger)
+        public void Take(Burger burger)
         {
             _target = burger;
             _animator.SetTrigger(IsGrab);
@@ -34,6 +35,11 @@ namespace Scripts.Hero
         {
             _target.transform.position  = _pointGrab.position;
             _target.transform.parent = _pointGrab;
+        }
+
+        public void Give()
+        {
+            _target = null;
         }
     }
 }

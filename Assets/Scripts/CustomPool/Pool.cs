@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,6 +13,10 @@ namespace Scripts.CustomPool
         [Min(0)] private int _poolCountMax;
         private List<GameObject> _pools = new List<GameObject>();
 
+        public Transform Container => _container;
+
+        public event Action IsRedy;
+
         public void Construct( GameObject prefab , int count,Transform container)
         {
             _prefab = prefab;
@@ -20,11 +25,11 @@ namespace Scripts.CustomPool
 
             for(int i = 0;i < _poolCountMax; i++)
             {
-                GameObject obj = Instantiate(_prefab);
-                obj.transform.parent = _container;
+                GameObject obj = Instantiate(_prefab,_container);
                 obj.SetActive(false);
                 _pools.Add(obj);
             }
+            IsRedy?.Invoke();
         }
 
         public GameObject Get()
@@ -36,12 +41,14 @@ namespace Scripts.CustomPool
                 obj = Create();
             }
             obj.SetActive(true);
+            obj.transform.parent = _container;
             return obj;
         }
 
+
         private GameObject Create()
         {
-            GameObject obj = Instantiate( _prefab);
+            GameObject obj = Instantiate( _prefab,_container);
             _pools.Add(obj);
             return obj;
         }

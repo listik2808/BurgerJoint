@@ -9,9 +9,14 @@ namespace Scripts.Workflow
         [SerializeField] private Image _icon;
         [SerializeField] private Image _imageBackgraund;
         [SerializeField] private float _timeWorkMax;
+        [SerializeField] private float _price;
         private float _min;
+        private bool _active = false;
 
-        public event Action BurgerReady;
+        public float Price => _price;
+
+        public event Action Ready;
+        public event Action<float> Pay;
 
         private void Start() 
         {
@@ -26,9 +31,11 @@ namespace Scripts.Workflow
 
         public void RunWork(float elepsedTime)
         {
-            if(_min >= _timeWorkMax)
+            if(_min >= _timeWorkMax && _active ==false)
             {
-                BurgerReady?.Invoke();
+                _active = true;
+                Ready?.Invoke();
+                Pay?.Invoke(_price);
             }
             else 
             {
@@ -46,6 +53,7 @@ namespace Scripts.Workflow
         public void DeactivateBackgrounImage()
         {
             _imageBackgraund.gameObject.SetActive(false);
+            _active = false;
         }
     }
 }
